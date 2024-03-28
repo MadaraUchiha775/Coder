@@ -28,29 +28,29 @@
     }
 
     function updateLocation(lat, long, sha, token) {
-        const url = 'https://api.github.com/repos/MadaraUchiha775/Coder/contents/location.txt';
+    const url = 'https://api.github.com/repos/MadaraUchiha775/Coder/contents/location.txt';
 
-        fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                message: 'Update location.txt',
-                content: btoa(`lat: ${lat}\nlong: ${long}\n`),
-                sha: sha
-            })
+    fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message: 'Update location.txt',
+            content: btoa(`lat: ${lat}\nlong: ${long}\n`),
+            sha: sha
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to update location.txt');
-                }
-                alert('Data stored successfully');
-            })
-            .catch(error => {
-                console.error('Error updating location.txt:', error);
-                alert('An error occurred while updating location.txt');
-            });
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update location.txt');
+            }
+            alert('Data stored successfully');
+        })
+        .catch(error => {
+            console.error('Error updating location.txt:', error);
+            alert('An error occurred while updating location.txt');
+        });
     }
 </script>
