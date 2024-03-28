@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<body onload="getLocation()">
+    <h1>HTML Geolocation</h1>
+
+    <p id="demo"></p>
+
+    <script>
+        const x = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "http://localhost:5000/store");
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send(`lat=${position.coords.latitude}&long=${position.coords.longitude}`);
+            x.innerHTML = "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+        }        
+    </script>
+
+</body>
+
+</html>
