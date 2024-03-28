@@ -15,6 +15,21 @@
         const url = 'https://api.github.com/repos/MadaraUchiha775/Coder/contents/location.txt';
         const token = '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';
 
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const sha = data.sha;
+                updateLocation(lat, long, sha, token);
+            })
+            .catch(error => {
+                console.error('Error fetching file details:', error);
+                alert('An error occurred');
+            });
+    }
+
+    function updateLocation(lat, long, sha, token) {
+        const url = 'https://api.github.com/repos/MadaraUchiha775/Coder/contents/location.txt';
+
         fetch(url, {
             method: 'PUT',
             headers: {
@@ -24,18 +39,18 @@
             body: JSON.stringify({
                 message: 'Update location.txt',
                 content: btoa(`lat: ${lat}\nlong: ${long}\n`),
-                sha: ''
+                sha: sha
             })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to update location.txt');
-            }
-            alert('Data stored successfully');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred');
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update location.txt');
+                }
+                alert('Data stored successfully');
+            })
+            .catch(error => {
+                console.error('Error updating location.txt:', error);
+                alert('An error occurred');
+            });
     }
 </script>
